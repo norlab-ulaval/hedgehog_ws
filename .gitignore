@@ -1,0 +1,11 @@
+**/build/
+**/install/
+**/log/
+**/.clangd
+compile_commands.json
+dependencies.txt
+.vscode/
+*.swp
+.cache/
+.env/
+**/__pycache__

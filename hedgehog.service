@@ -1,0 +1,12 @@
+[Unit]
+Description=Startup service for hedgehog
+
+[Service]
+User=hedgehog
+WorkingDirectory=/home/hedgehog/hedgehog_ws
+ExecStart=/bin/zsh startup.zsh
+Restart=always
+Type=forking
+
+[Install]
+WantedBy=multi-user.target
