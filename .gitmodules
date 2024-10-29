@@ -1,0 +1,24 @@
+[submodule "src/ackermann_mux"]
+	path = src/ackermann_mux
+	url = git@github.com:vaul-ulaval/ackermann_mux.git
+[submodule "src/libpointmatcher_ros"]
+	path = src/libpointmatcher_ros
+	url = git@github.com:norlab-ulaval/libpointmatcher_ros.git
+[submodule "src/norlab_icp_mapper_ros"]
+	path = src/norlab_icp_mapper_ros
+	url = git@github.com:norlab-ulaval/norlab_icp_mapper_ros.git
+[submodule "src/rslidar_msg"]
+	path = src/rslidar_msg
+	url = git@github.com:RoboSense-LiDAR/rslidar_msg.git
+[submodule "src/rslidar_sdk"]
+	path = src/rslidar_sdk
+	url = git@github.com:RoboSense-LiDAR/rslidar_sdk.git
+[submodule "src/teleop_tools"]
+	path = src/teleop_tools
+	url = git@github.com:vaul-ulaval/teleop_tools.git
+[submodule "src/vesc"]
+	path = src/vesc
+	url = git@github.com:vaul-ulaval/vesc.git
+[submodule "src/vectornav"]
+	path = src/vectornav
+	url = git@github.com:dawonn/vectornav.git
