@@ -27,6 +27,7 @@ def generate_launch_description():
                 ),
                 'initial_map_file_name': '',
                 'initial_robot_pose': '[[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]',
+                # 'initial_robot_pose': '[[1, 0, 0], [0, 1, 0], [0, 0, 1]]',
                 'final_map_file_name': 'map.vtk',
                 'final_trajectory_file_name': 'trajectory.vtk',
                 'map_publish_rate': 10.0,
