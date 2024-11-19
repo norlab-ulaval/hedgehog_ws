@@ -7,5 +7,5 @@ ackermann_mux_node:
         priority: 10
       joystick:
         topic   : teleop
-        timeout : 0.2
+        timeout : 0.05
         priority: 100

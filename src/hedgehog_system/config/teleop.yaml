@@ -51,7 +51,7 @@ joy_teleop_node:
           deadzone: 0.5
         drive-steering_angle:
           axis: 0
-          scale: 0.5
+          scale: 0.7853 # 45 deg
           offset: 0.0
 
     autonomous_control:
