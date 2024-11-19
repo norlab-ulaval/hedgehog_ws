@@ -2,6 +2,7 @@ from ament_index_python import get_package_share_directory
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.substitutions import LaunchConfiguration
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 import os
@@ -19,6 +20,11 @@ def generate_launch_description():
 
     vesc_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(launch_folder, "vesc.launch.py")])
+    )
+
+    ekf_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(launch_folder, "ekf.launch.py")]),
+        launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
     )
 
     vn100_launch = IncludeLaunchDescription(
@@ -48,6 +54,7 @@ def generate_launch_description():
             la_sim_time,
             lidar_launch,
             vesc_launch,
+            ekf_launch,
             vn100_launch,
             ackermann_mux_launch,
             teleop_launch,
