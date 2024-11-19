@@ -50,6 +50,12 @@ def generate_launch_description():
         ],
     )
 
+    # EKF
+    ekf_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(launch_folder, "ekf.launch.py")]),
+        launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
+    )
+
     # Mapper
     mapper_config = os.path.join(base_path, "config", "offline_mapper.yaml")
     mapper_node = Node(
@@ -89,6 +95,7 @@ def generate_launch_description():
             foxglove_launch,
             vesc_la,
             vesc_to_odom_node,
+            ekf_launch,
             mapper_node,
             ExecuteProcess(
                 name="rosbag_play",
