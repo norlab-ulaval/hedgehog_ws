@@ -10,11 +10,9 @@ from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 
 
 def generate_launch_description():
-    # bag_file = "/home/hedgehog/bags/fastNicoExp1"
-    bag_file = "/home/hedgehog/bags/groundTruthNicoExp1"
+    bag_file = "/home/hedgehog/bags/mapping-2024-12-21_11-16-19"
     bag_clock_rate = 0.5
-    # bag_command = ["ros2", "bag", "play", bag_file, "--clock", "--rate", str(bag_clock_rate), "--start-offset", "25"]
-    bag_command = ["ros2", "bag", "play", bag_file, "--clock", "--rate", str(bag_clock_rate), "--start-offset", "15"]
+    bag_command = ["ros2", "bag", "play", bag_file, "--clock", "--rate", str(bag_clock_rate), "--start-offset", "0"]
 
     base_path = get_package_share_directory("hedgehog_system")
     launch_folder = os.path.join(base_path, "launch", "single_nodes")
@@ -50,12 +48,6 @@ def generate_launch_description():
             LaunchConfiguration("vesc_config"),
             {"use_sim_time": True},
         ],
-    )
-
-    gaslight_odom_node = Node(
-        package="vesc_ackermann",
-        executable="gaslight_odom",
-        name="gaslight_odom",
     )
 
     # IMU and wheel odom
@@ -114,8 +106,7 @@ def generate_launch_description():
             description_launch,
             foxglove_launch,
             vesc_la,
-            gaslight_odom_node,
-            # vesc_to_odom_node,
+            vesc_to_odom_node,
             # imu_and_wheel_odom_launch,
             # imu_odom_launch,
             # ekf_launch,
