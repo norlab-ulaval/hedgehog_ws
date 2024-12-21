@@ -1,0 +1,8 @@
+/**:
+  imu_odom_node:
+    ros__parameters:
+      odom_frame: "odom"
+      robot_frame: "base_link"
+      imu_frame: "imu"
+      rotation_only: false
+      real_time: false

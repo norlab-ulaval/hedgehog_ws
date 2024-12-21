@@ -29,7 +29,7 @@ vesc_to_odom_node:
   ros__parameters:
     odom_frame: odom
     base_frame: base_link
-    odom_topic: /odom
+    odom_topic: /vesc_odom
     publish_tf: false
     use_servo_cmd_to_calc_angular_velocity: true
     wheelbase: .57

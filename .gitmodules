@@ -22,3 +22,9 @@
 [submodule "src/vectornav"]
 	path = src/vectornav
 	url = git@github.com:dawonn/vectornav.git
+[submodule "src/norlab_imu_tools"]
+	path = src/norlab_imu_tools
+	url = git@github.com:norlab-ulaval/norlab_imu_tools.git
+[submodule "src/imu_odom"]
+	path = src/imu_odom
+	url = git@github.com:norlab-ulaval/imu_odom.git

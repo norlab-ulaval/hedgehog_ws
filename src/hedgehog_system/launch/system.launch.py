@@ -54,7 +54,7 @@ def generate_launch_description():
             la_sim_time,
             lidar_launch,
             vesc_launch,
-            ekf_launch,
+            # ekf_launch,
             vn100_launch,
             ackermann_mux_launch,
             teleop_launch,

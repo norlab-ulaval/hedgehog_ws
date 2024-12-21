@@ -10,9 +10,11 @@ from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 
 
 def generate_launch_description():
-    bag_file = "/home/hedgehog/bags/mapping-2024-11-19_09-26-09"
-    bag_clock_rate = 0.3
-    bag_command = ["ros2", "bag", "play", bag_file, "--clock", "--rate", str(bag_clock_rate)]
+    # bag_file = "/home/hedgehog/bags/fastNicoExp1"
+    bag_file = "/home/hedgehog/bags/groundTruthNicoExp1"
+    bag_clock_rate = 0.5
+    # bag_command = ["ros2", "bag", "play", bag_file, "--clock", "--rate", str(bag_clock_rate), "--start-offset", "25"]
+    bag_command = ["ros2", "bag", "play", bag_file, "--clock", "--rate", str(bag_clock_rate), "--start-offset", "15"]
 
     base_path = get_package_share_directory("hedgehog_system")
     launch_folder = os.path.join(base_path, "launch", "single_nodes")
@@ -48,6 +50,24 @@ def generate_launch_description():
             LaunchConfiguration("vesc_config"),
             {"use_sim_time": True},
         ],
+    )
+
+    gaslight_odom_node = Node(
+        package="vesc_ackermann",
+        executable="gaslight_odom",
+        name="gaslight_odom",
+    )
+
+    # IMU and wheel odom
+    imu_and_wheel_odom_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(launch_folder, "imu_and_wheel_odom.launch.py")]),
+        launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
+    )
+
+    # IMU odom
+    imu_odom_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(launch_folder, "imu_odom.launch.py")]),
+        launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
     )
 
     # EKF
@@ -94,8 +114,11 @@ def generate_launch_description():
             description_launch,
             foxglove_launch,
             vesc_la,
-            vesc_to_odom_node,
-            ekf_launch,
+            gaslight_odom_node,
+            # vesc_to_odom_node,
+            # imu_and_wheel_odom_launch,
+            # imu_odom_launch,
+            # ekf_launch,
             mapper_node,
             ExecuteProcess(
                 name="rosbag_play",

@@ -9,7 +9,7 @@ import os
 
 
 def generate_launch_description():
-    topics = ["rslidar_points", "sensors/core", "commands/servo/position", "vectornav/imu"]
+    topics = ["rslidar_points", "sensors/core", "commands/servo/position", "vn100/data"]
 
     filename = datetime.now().strftime("mapping-%Y-%m-%d_%H-%M-%S")
     path = f"/home/hedgehog/bags/{filename}"
