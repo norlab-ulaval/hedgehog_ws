@@ -33,4 +33,4 @@ vesc_to_odom_node:
     publish_tf: true
     use_servo_cmd_to_calc_angular_velocity: true
     wheelbase: .57
-    yaw_dampening: 0.2
+    yaw_dampening: 0.3

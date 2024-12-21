@@ -1,0 +1,6 @@
+/**:
+  pcl_deskew_node:
+    ros__parameters:
+      fixed_frame_for_lidar: "odom"
+      expected_pointcloud_columns: 10000
+      round_to_n_nanoseconds: 10000

@@ -14,8 +14,9 @@ from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 
 
 def generate_launch_description():
-    bag_file = "/home/nicolaslauzon/ws/uni/bags/map_slow_21"
-    bag_clock_rate = 0.5
+    # bag_file = "/home/nicolaslauzon/ws/uni/bags/groundTruthNicoExp1"
+    bag_file = "/home/nicolaslauzon/ws/uni/bags/fastNicoExp1"
+    # bag_file = "/home/nicolaslauzon/ws/uni/bags/map_slow_21"
     bag_command = [
         "ros2",
         "bag",
@@ -23,9 +24,9 @@ def generate_launch_description():
         bag_file,
         "--clock",
         "--rate",
-        str(bag_clock_rate),
+        "0.1",
         "--start-offset",
-        "0",
+        "22",
     ]
 
     base_path = get_package_share_directory("hedgehog_system")
@@ -71,26 +72,26 @@ def generate_launch_description():
     )
 
     # IMU and wheel odom
-    imu_and_wheel_odom_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [os.path.join(launch_folder, "imu_and_wheel_odom.launch.py")]
-        ),
-        launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
-    )
+    # imu_and_wheel_odom_launch = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         [os.path.join(launch_folder, "imu_and_wheel_odom.launch.py")]
+    #     ),
+    #     launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
+    # )
 
     # IMU odom
-    imu_odom_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [os.path.join(launch_folder, "imu_odom.launch.py")]
-        ),
-        launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
-    )
+    # imu_odom_launch = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         [os.path.join(launch_folder, "imu_odom.launch.py")]
+    #     ),
+    #     launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
+    # )
 
-    # EKF
-    ekf_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(launch_folder, "ekf.launch.py")]),
-        launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
-    )
+    # # EKF
+    # ekf_launch = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource([os.path.join(launch_folder, "ekf.launch.py")]),
+    #     launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
+    # )
 
     # Mapper
     mapper_config = os.path.join(base_path, "config", "offline_mapper.yaml")
@@ -115,7 +116,7 @@ def generate_launch_description():
                 "is_online": False,
                 "is_3D": True,
                 "save_map_cells_on_hard_drive": True,
-                "publish_tfs_between_registrations": True,
+                "publish_tfs_between_registrations": False,
                 "use_sim_time": True,
             },
         ],
@@ -124,12 +125,19 @@ def generate_launch_description():
         ],
     )
 
+    pcl_deskew_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [os.path.join(launch_folder, "deskewing.launch.py")]
+        )
+    )
+
     return LaunchDescription(
         [
             la_sim_time,
             description_launch,
             foxglove_launch,
             vesc_la,
+            # pcl_deskew_launch,
             vesc_to_odom_node,
             # imu_and_wheel_odom_launch,
             # imu_odom_launch,
