@@ -2,7 +2,11 @@ import os
 import sys
 from ament_index_python import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, ExecuteProcess
+from launch.actions import (
+    DeclareLaunchArgument,
+    IncludeLaunchDescription,
+    ExecuteProcess,
+)
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
@@ -10,27 +14,43 @@ from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 
 
 def generate_launch_description():
-    bag_file = "/home/hedgehog/bags/mapping-2024-12-21_11-16-19"
+    bag_file = "/home/nicolaslauzon/ws/uni/bags/map_slow_21"
     bag_clock_rate = 0.5
-    bag_command = ["ros2", "bag", "play", bag_file, "--clock", "--rate", str(bag_clock_rate), "--start-offset", "0"]
+    bag_command = [
+        "ros2",
+        "bag",
+        "play",
+        bag_file,
+        "--clock",
+        "--rate",
+        str(bag_clock_rate),
+        "--start-offset",
+        "0",
+    ]
 
     base_path = get_package_share_directory("hedgehog_system")
     launch_folder = os.path.join(base_path, "launch", "single_nodes")
 
-    kill_system()
+    # kill_system()
 
     la_sim_time = DeclareLaunchArgument("use_sim_time", default_value="true")
 
     # TFs
     description_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(launch_folder, "description.launch.py")]),
+        PythonLaunchDescriptionSource(
+            [os.path.join(launch_folder, "description.launch.py")]
+        ),
         launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
     )
 
     # Foxglove Bridge
     foxglove_launch = IncludeLaunchDescription(
         XMLLaunchDescriptionSource(
-            os.path.join(get_package_share_directory("foxglove_bridge"), "launch", "foxglove_bridge_launch.xml")
+            os.path.join(
+                get_package_share_directory("foxglove_bridge"),
+                "launch",
+                "foxglove_bridge_launch.xml",
+            )
         )
     )
 
@@ -52,13 +72,17 @@ def generate_launch_description():
 
     # IMU and wheel odom
     imu_and_wheel_odom_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(launch_folder, "imu_and_wheel_odom.launch.py")]),
+        PythonLaunchDescriptionSource(
+            [os.path.join(launch_folder, "imu_and_wheel_odom.launch.py")]
+        ),
         launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
     )
 
     # IMU odom
     imu_odom_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(launch_folder, "imu_odom.launch.py")]),
+        PythonLaunchDescriptionSource(
+            [os.path.join(launch_folder, "imu_odom.launch.py")]
+        ),
         launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
     )
 
