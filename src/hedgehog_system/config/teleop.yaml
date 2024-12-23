@@ -5,7 +5,6 @@ joy_node:
     # deadzone: 0.01
     autorepeat_rate: 20.0
     coalesce_interval_ms: 0
-
 joy_teleop_node:
   ros__parameters:
     default:
@@ -22,7 +21,6 @@ joy_teleop_node:
           axis: 0
           scale: 0.0
           offset: 0.0
-
     no_control:
       type: topic
       interface_type: ackermann_msgs/msg/AckermannDriveStamped
@@ -37,7 +35,6 @@ joy_teleop_node:
           axis: 0
           scale: 0.0
           offset: 0.0
-
     human_control:
       type: topic
       interface_type: ackermann_msgs/msg/AckermannDriveStamped
@@ -46,19 +43,26 @@ joy_teleop_node:
       axis_mappings:
         drive-speed:
           axis: 2
-          scale: 1.0
+          scale: 5.0
           offset: 0.0
           deadzone: 0.5
         drive-steering_angle:
           axis: 0
-          scale: 0.7853 # 45 deg
+          scale: 0.785398 # 45 deg
           offset: 0.0
-
     autonomous_control:
       type: topic
       interface_type: std_msgs/msg/Int8
       topic_name: /dev/null
       deadman_buttons: [0]
+      message_value:
+        data:
+          value: 0
+    drive_step:
+      type: topic
+      interface_type: std_msgs/msg/Int8
+      topic_name: /start_step # Start drive step
+      deadman_buttons: [2]
       message_value:
         data:
           value: 0

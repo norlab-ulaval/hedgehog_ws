@@ -30,7 +30,7 @@ def generate_launch_description():
     )
 
     # Mapper
-    mapper_config = os.path.join(base_path, "config", "online_mapper.yaml")
+    mapper_config = os.path.join(base_path, "config", "offline_mapper.yaml")
     mapper_node = Node(
         package="norlab_icp_mapper_ros",
         executable="mapper_node",
@@ -40,7 +40,7 @@ def generate_launch_description():
                 "odom_frame": "odom",
                 "robot_frame": "base_link",
                 "mapping_config": mapper_config,
-                "initial_map_file_name": "/home/hedgehog/map_couloir.vtk",
+                "initial_map_file_name": "/home/hedgehog/map_will_best.vtk",
                 "initial_robot_pose": "[[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]",
                 "final_map_file_name": "map.vtk",
                 "final_trajectory_file_name": "trajectory.vtk",

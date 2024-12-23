@@ -3,9 +3,9 @@ ackermann_mux_node:
     topics:
       navigation:
         topic   : drive
-        timeout : 0.2
+        timeout : 0.1
         priority: 10
       joystick:
         topic   : teleop
-        timeout : 0.05
+        timeout : 0.1
         priority: 100

@@ -9,7 +9,7 @@
 	url = git@github.com:norlab-ulaval/norlab_icp_mapper_ros.git
 [submodule "src/rslidar_msg"]
 	path = src/rslidar_msg
-	url = git@github.com:RoboSense-LiDAR/rslidar_msg.git
+	url = git@github.com:norlab-ulaval/rslidar_sdk.git
 [submodule "src/rslidar_sdk"]
 	path = src/rslidar_sdk
 	url = git@github.com:RoboSense-LiDAR/rslidar_sdk.git

@@ -10,8 +10,9 @@ from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 
 
 def generate_launch_description():
-    bag_file = "/home/hedgehog/bags/will/mapping-2024-12-23_16-27-39/"
-    bag_clock_rate = 0.2
+    bag_file = "/home/hedgehog/bags/will/drive-1"
+    map_file = "/home/hedgehog/map_will_best.vtk"
+    bag_clock_rate = 1.0
     bag_command = ["ros2", "bag", "play", bag_file, "--clock", "--rate", str(bag_clock_rate), "--start-offset", "0"]
 
     base_path = get_package_share_directory("hedgehog_system")
@@ -34,37 +35,9 @@ def generate_launch_description():
         )
     )
 
-    # VESC odom
-    vesc_config = os.path.join(base_path, "config", "vesc.yaml")
-    vesc_la = DeclareLaunchArgument(
-        "vesc_config",
-        default_value=vesc_config,
-    )
-    vesc_to_odom_node = Node(
-        package="vesc_ackermann",
-        executable="vesc_to_odom_node",
-        name="vesc_to_odom_node",
-        parameters=[
-            LaunchConfiguration("vesc_config"),
-            {"use_sim_time": True},
-        ],
-    )
-
-    # IMU and wheel odom
-    imu_and_wheel_odom_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(launch_folder, "imu_and_wheel_odom.launch.py")]),
-        launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
-    )
-
     # IMU odom
     imu_odom_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(launch_folder, "imu_odom.launch.py")]),
-        launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
-    )
-
-    # EKF
-    ekf_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(launch_folder, "ekf.launch.py")]),
         launch_arguments={"use_sim_time": LaunchConfiguration("use_sim_time")}.items(),
     )
 
@@ -79,7 +52,7 @@ def generate_launch_description():
                 "odom_frame": "odom",
                 "robot_frame": "base_link",
                 "mapping_config": mapper_config,
-                "initial_map_file_name": "",
+                "initial_map_file_name": map_file,
                 "initial_robot_pose": "[[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]",
                 # 'initial_robot_pose': '[[1, 0, 0], [0, 1, 0], [0, 0, 1]]',
                 "final_map_file_name": "map.vtk",
@@ -87,8 +60,8 @@ def generate_launch_description():
                 "map_publish_rate": 10.0,
                 "map_tf_publish_rate": 10.0,
                 "max_idle_time": 10.0,
-                "is_mapping": True,
-                "is_online": False,
+                "is_mapping": False,
+                "is_online": True,
                 "is_3D": True,
                 "save_map_cells_on_hard_drive": True,
                 "publish_tfs_between_registrations": True,
@@ -105,11 +78,7 @@ def generate_launch_description():
             la_sim_time,
             description_launch,
             foxglove_launch,
-            # vesc_la,
-            # vesc_to_odom_node,
-            # imu_and_wheel_odom_launch,
             imu_odom_launch,
-            # ekf_launch,
             mapper_node,
             ExecuteProcess(
                 name="rosbag_play",
