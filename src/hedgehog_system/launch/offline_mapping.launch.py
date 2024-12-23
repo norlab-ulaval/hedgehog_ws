@@ -14,8 +14,8 @@ from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 
 
 def generate_launch_description():
-    # bag_file = "/home/nicolaslauzon/ws/uni/bags/groundTruthNicoExp1"
-    bag_file = "/home/nicolaslauzon/ws/uni/bags/fastNicoExp1"
+    bag_file = "/home/nicolaslauzon/ws/uni/bags/groundTruthNicoExp1"
+    # bag_file = "/home/nicolaslauzon/ws/uni/bags/fastNicoExp1"
     # bag_file = "/home/nicolaslauzon/ws/uni/bags/map_slow_21"
     bag_command = [
         "ros2",
@@ -24,7 +24,7 @@ def generate_launch_description():
         bag_file,
         "--clock",
         "--rate",
-        "0.1",
+        "0.2",
         "--start-offset",
         "22",
     ]
